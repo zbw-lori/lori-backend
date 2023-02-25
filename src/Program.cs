@@ -1,5 +1,7 @@
+using HealthChecks.UI.Client;
 using helloworld.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -47,6 +49,8 @@ builder.Services.AddCors(options =>
                       });
 });
 
+builder.Services.AddHealthChecks().AddMySql(connectionString: builder.Configuration.GetConnectionString("MySql"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,6 +66,12 @@ app.UseRouting();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
+
+app.UseHealthChecks("/hc", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.MapControllers();
 
