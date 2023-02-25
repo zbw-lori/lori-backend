@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sample.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,7 +22,7 @@ namespace Sample.Controllers
         }
 
         // GET: api/<MessageController>
-        [HttpGet]
+        [HttpGet, Authorize]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -35,7 +36,7 @@ namespace Sample.Controllers
         }
 
         // POST api/<MessageController>
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task Post([FromBody] string value)
         {
             Console.WriteLine($"Received message: {value}");
