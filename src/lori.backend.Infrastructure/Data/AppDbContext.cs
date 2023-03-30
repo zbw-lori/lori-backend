@@ -1,26 +1,51 @@
 ﻿using System.Reflection;
 using lori.backend.Core.ProjectAggregate;
+using lori.backend.Infrastructure.Models;
 using lori.backend.SharedKernel;
 using lori.backend.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace lori.backend.Infrastructure.Data;
 
-public class AppDbContext : DbContext
+public class LoriDbContext : DbContext
 {
-  private readonly IDomainEventDispatcher? _dispatcher;
+  /*private readonly IDomainEventDispatcher? _dispatcher;
 
-  public AppDbContext(DbContextOptions<AppDbContext> options,
+  public LoriDbContext(DbContextOptions<LoriDbContext> options,
     IDomainEventDispatcher? dispatcher)
       : base(options)
   {
     _dispatcher = dispatcher;
+  }*/
+
+
+  // SOURCE: https://jasonwatmore.com/post/2022/03/25/net-6-connect-to-mysql-database-with-entity-framework-core
+  protected readonly IConfiguration Configuration;
+
+  public LoriDbContext(IConfiguration configuration)
+  {
+    Configuration = configuration;
+  }
+  protected override void OnConfiguring(DbContextOptionsBuilder options)
+  {
+    var connectionString = Configuration.GetConnectionString("LoriDatabase");
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
   }
 
-  public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
-  public DbSet<Project> Projects => Set<Project>();
+  public DbSet<Address> Addresses { get; set; } = null!;
+  public DbSet<Customer> Customers { get; set; } = null!;
+  public DbSet<Item> Items { get; set; } = null!;
+  public DbSet<Login> Logins { get; set; } = null!;
+  public DbSet<Order> Orders { get; set; } = null!;
 
-  protected override void OnModelCreating(ModelBuilder modelBuilder)
+  public DbSet<OrderItem> OrderItems { get; set; } = null!;
+  public DbSet<Robot> Robots { get; set; } = null!;
+  public DbSet<Route> Routes { get; set; } = null!;
+  public DbSet<Store> Stores { get; set; } = null!; 
+
+  /*protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -47,5 +72,5 @@ public class AppDbContext : DbContext
   public override int SaveChanges()
   {
     return SaveChangesAsync().GetAwaiter().GetResult();
-  }
+  }*/
 }
