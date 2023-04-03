@@ -10,6 +10,5 @@ public class Login
 {
   [Key]
   public string Username { get; set; } = null!;
-  [Key]
   public Byte[] Password { get; set; } = null!;
 }
