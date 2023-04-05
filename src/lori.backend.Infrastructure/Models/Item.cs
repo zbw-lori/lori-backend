@@ -11,4 +11,5 @@ public class Item
   public string Name { get; set; } = null!;
   public decimal Price { get; set; }
   public int StoreId { get; set; }
+  public Store Store { get; set; } = null!;
 }
