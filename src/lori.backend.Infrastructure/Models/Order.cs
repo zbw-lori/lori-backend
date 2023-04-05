@@ -13,4 +13,5 @@ public class Order
   public DateTime dateTime { get; set; }
   public string ReceiptType { get; set;} = null!;
   public int CustomerId { get; set; }
+  public Customer Customer { get; set; } = null!;
 }
