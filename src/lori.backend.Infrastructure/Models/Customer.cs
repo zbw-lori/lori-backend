@@ -9,7 +9,6 @@ public class Customer
   public string Email { get; set; } = null!;
   public string Phone { get; set; } = null!;
   public int AddressId { get; set; }
-/*  public int LoginUsername { get; set; }
-  public Byte[] LoginPassword { get; set; }*/
+  public Address Address { get; set; } = null!;
 }
 
