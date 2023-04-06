@@ -1,16 +1,17 @@
 ﻿using Ardalis.HttpClientTestExtensions;
 using lori.backend.Web;
 using lori.backend.Web.ApiModels;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 
 namespace lori.backend.FunctionalTests.ControllerApis;
 
 [Collection("Sequential")]
-public class ProjectCreate : IClassFixture<CustomWebApplicationFactory<WebMarker>>
+public class ProjectCreate : IClassFixture<CustomWebApplicationFactory<Program>>
 {
   private readonly HttpClient _client;
 
-  public ProjectCreate(CustomWebApplicationFactory<WebMarker> factory)
+  public ProjectCreate(CustomWebApplicationFactory<Program> factory)
   {
     _client = factory.CreateClient();
   }

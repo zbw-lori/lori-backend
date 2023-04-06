@@ -32,11 +32,11 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
     var serviceProvider = host.Services;
 
     // Create a scope to obtain a reference to the database
-    // context (AppDbContext).
+    // context (LoriDbContext).
     using (var scope = serviceProvider.CreateScope())
     {
       var scopedServices = scope.ServiceProvider;
-      var db = scopedServices.GetRequiredService<AppDbContext>();
+      var db = scopedServices.GetRequiredService<LoriDbContext>();
 
       var logger = scopedServices
           .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
@@ -71,7 +71,7 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
           // Remove the app's ApplicationDbContext registration.
           var descriptor = services.SingleOrDefault(
           d => d.ServiceType ==
-              typeof(DbContextOptions<AppDbContext>));
+              typeof(DbContextOptions<LoriDbContext>));
 
           if (descriptor != null)
           {
@@ -82,7 +82,7 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
           string inMemoryCollectionName = Guid.NewGuid().ToString();
 
           // Add ApplicationDbContext using an in-memory database for testing.
-          services.AddDbContext<AppDbContext>(options =>
+          services.AddDbContext<LoriDbContext>(options =>
           {
             options.UseInMemoryDatabase(inMemoryCollectionName);
           });

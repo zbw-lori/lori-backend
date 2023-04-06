@@ -25,11 +25,11 @@ public static class SeedData
 
   public static void Initialize(IServiceProvider serviceProvider)
   {
-    using (var dbContext = new AppDbContext(
-        serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>(), null))
+    using (var dbContext = new LoriDbContext(
+        serviceProvider.GetRequiredService<DbContextOptions<LoriDbContext>>(), null))
     {
       // Look for any TODO items.
-      if (dbContext.ToDoItems.Any())
+      if (dbContext.Robots.Any())
       {
         return;   // DB has been seeded
       }
@@ -39,9 +39,9 @@ public static class SeedData
 
     }
   }
-  public static void PopulateTestData(AppDbContext dbContext)
+  public static void PopulateTestData(LoriDbContext dbContext)
   {
-    foreach (var item in dbContext.Projects)
+    /*foreach (var item in dbContext.Robots)
     {
       dbContext.Remove(item);
     }
@@ -56,6 +56,6 @@ public static class SeedData
     TestProject1.AddItem(ToDoItem3);
     dbContext.Projects.Add(TestProject1);
 
-    dbContext.SaveChanges();
+    dbContext.SaveChanges();*/
   }
 }

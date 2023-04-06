@@ -9,17 +9,17 @@ namespace lori.backend.IntegrationTests.Data;
 
 public abstract class BaseEfRepoTestFixture
 {
-  protected AppDbContext _dbContext;
+  protected LoriDbContext _dbContext;
 
   protected BaseEfRepoTestFixture()
   {
     var options = CreateNewContextOptions();
     var mockEventDispatcher = new Mock<IDomainEventDispatcher>();
 
-    _dbContext = new AppDbContext(options, mockEventDispatcher.Object);
+    _dbContext = new LoriDbContext(options, mockEventDispatcher.Object);
   }
 
-  protected static DbContextOptions<AppDbContext> CreateNewContextOptions()
+  protected static DbContextOptions<LoriDbContext> CreateNewContextOptions()
   {
     // Create a fresh service provider, and therefore a fresh
     // InMemory database instance.
@@ -29,7 +29,7 @@ public abstract class BaseEfRepoTestFixture
 
     // Create a new options instance telling the context to use an
     // InMemory database and the new service provider.
-    var builder = new DbContextOptionsBuilder<AppDbContext>();
+    var builder = new DbContextOptionsBuilder<LoriDbContext>();
     builder.UseInMemoryDatabase("cleanarchitecture")
            .UseInternalServiceProvider(serviceProvider);
 

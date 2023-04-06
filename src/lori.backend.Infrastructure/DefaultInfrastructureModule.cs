@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Autofac;
-using lori.backend.Core.Interfaces;
 using lori.backend.Core.ProjectAggregate;
 using lori.backend.Infrastructure.Data;
 using lori.backend.SharedKernel;
@@ -10,7 +9,6 @@ using MediatR.Pipeline;
 using Module = Autofac.Module;
 
 namespace lori.backend.Infrastructure;
-
 public class DefaultInfrastructureModule : Module
 {
   private readonly bool _isDevelopment = false;
@@ -78,8 +76,8 @@ public class DefaultInfrastructureModule : Module
 
     var mediatrOpenTypes = new[]
     {
-      typeof(IRequestHandler<,>), 
-      typeof(IRequestExceptionHandler<,,>), 
+      typeof(IRequestHandler<,>),
+      typeof(IRequestExceptionHandler<,,>),
       typeof(IRequestExceptionAction<,>),
       typeof(INotificationHandler<>),
     };
@@ -96,14 +94,14 @@ public class DefaultInfrastructureModule : Module
   private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)
   {
     // NOTE: Add any development only services here
-    builder.RegisterType<FakeEmailSender>().As<IEmailSender>()
-      .InstancePerLifetimeScope();
+    //builder.RegisterType<FakeEmailSender>().As<IEmailSender>()
+    //  .InstancePerLifetimeScope();
   }
 
   private void RegisterProductionOnlyDependencies(ContainerBuilder builder)
   {
     // NOTE: Add any production only services here
-    builder.RegisterType<SmtpEmailSender>().As<IEmailSender>()
-      .InstancePerLifetimeScope();
+    //builder.RegisterType<SmtpEmailSender>().As<IEmailSender>()
+    //  .InstancePerLifetimeScope();
   }
 }

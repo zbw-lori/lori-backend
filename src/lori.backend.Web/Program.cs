@@ -20,7 +20,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
   options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
-string connectionString = builder.Configuration.GetConnectionString("SqliteConnection");  //Configuration.GetConnectionString("DefaultConnection");
+string connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
 
 builder.Services.AddDbContext(connectionString);
 
@@ -88,7 +88,7 @@ using (var scope = app.Services.CreateScope())
 
   try
   {
-    var context = services.GetRequiredService<AppDbContext>();
+    var context = services.GetRequiredService<LoriDbContext>();
     //                    context.Database.Migrate();
     context.Database.EnsureCreated();
     SeedData.Initialize(services);
