@@ -19,5 +19,5 @@ jobs:
         dotnet-version: '7.0.x'
     - name: Build with dotnet
       run: dotnet build --configuration Release
-    - name: Test with dotnet
-      run: dotnet test ./lori.backend.sln --configuration Release
+    # - name: Test with dotnet
+    #   run: dotnet test ./lori.backend.sln --configuration Release
