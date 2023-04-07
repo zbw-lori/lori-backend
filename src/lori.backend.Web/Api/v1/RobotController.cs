@@ -26,7 +26,6 @@ public class RobotController : ControllerBase
   }
 
   // GET: api/v1/robot/1
-  // <snippet_GetByID>
   [HttpGet("{id}")]
   public async Task<ActionResult<RobotDTO>> GetRobot(int id)
   {
@@ -41,7 +40,68 @@ public class RobotController : ControllerBase
   }
 
   // PUT: api/v1/robot/1
-  // <snippet_Update>
+  [HttpPut("{id}")]
+  public async Task<IActionResult> PutRobot(int id, RobotDTO robotDTO)
+  {
+    if (id != robotDTO.Id)
+    {
+      return BadRequest();
+    }
+    var robot = await _context.Robots.FindAsync(id);
+    if (robot == null)
+    {
+      return NotFound();
+    }
+    robot.Name = robotDTO.Name;
+    robot.Description = robotDTO.Description;
+    robot.Model = robotDTO.Model;
+    try
+    {
+      await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException) when (!RobotExists(id))
+    {
+      return NotFound();
+    }
+    return NoContent();
+  }
+
+  // POST: api/v1/robot
+  [HttpPost]
+  public async Task<ActionResult<RobotDTO>> PostRobot(RobotDTO robotDTO)
+  {
+    var robot = new Robot
+    {
+      Name = robotDTO.Name,
+      Description = robotDTO.Description,
+      Model = robotDTO.Model
+    };
+    _context.Robots.Add(robot);
+    await _context.SaveChangesAsync();
+    return CreatedAtAction(
+           nameof(GetRobot),
+                new { id = robot.Id },
+                     RobotToDTO(robot));
+  }
+
+  // DELETE: api/v1/robot/1
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeleteRobot(int id)
+  {
+    var robot = await _context.Robots.FindAsync(id);
+    if (robot == null)
+    {
+      return NotFound();
+    }
+    _context.Robots.Remove(robot);
+    await _context.SaveChangesAsync();
+    return NoContent();
+  }
+
+  private bool RobotExists(int id)
+  {
+    return _context.Robots.Any(e => e.Id == id);
+  }
 
   private static RobotDTO RobotToDTO(Robot robot) =>
     new RobotDTO
