@@ -3,8 +3,6 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using lori.backend.Core;
 using lori.backend.Infrastructure;
-using lori.backend.Infrastructure.Data;
-using lori.backend.Web;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -29,7 +27,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddSwaggerGen(c =>
 {
-  c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+  c.SwaggerDoc("v1", new OpenApiInfo { Title = "LORI API", Version = "v1" });
   c.EnableAnnotations();
 });
 
@@ -73,31 +71,11 @@ app.UseCookiePolicy();
 app.UseSwagger();
 
 // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LORI API v1"));
 
 app.UseEndpoints(endpoints =>
 {
   endpoints.MapDefaultControllerRoute();
-  endpoints.MapRazorPages();
 });
-
-// Seed Database
-using (var scope = app.Services.CreateScope())
-{
-  var services = scope.ServiceProvider;
-
-  try
-  {
-    var context = services.GetRequiredService<LoriDbContext>();
-    //                    context.Database.Migrate();
-    context.Database.EnsureCreated();
-    SeedData.Initialize(services);
-  }
-  catch (Exception ex)
-  {
-    var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "An error occurred seeding the DB. {exceptionMessage}", ex.Message);
-  }
-}
 
 app.Run();
