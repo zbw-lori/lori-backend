@@ -3,11 +3,12 @@ using lori.backend.Infrastructure.Models;
 using lori.backend.Web.ApiModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace lori.backend.Web.Api.v1;
 [Route ("api/v1/[controller]")]
 [ApiController]
-public class RobotController : ControllerBase
+public class RobotController : BaseApiController
 {
   private readonly LoriDbContext _context;
 
@@ -16,8 +17,12 @@ public class RobotController : ControllerBase
     _context = context;
   }
 
-  // GET: api/v1/robot
+  // GET: /robot
   [HttpGet]
+  [SwaggerOperation(
+    Summary = "Gets a list of all robots",
+    OperationId = "Robot.GetRobots")
+  ]
   public async Task<ActionResult<IEnumerable<RobotDTO>>> GetRobots()
   {
     return await _context.Robots
@@ -25,8 +30,12 @@ public class RobotController : ControllerBase
       .ToListAsync();
   }
 
-  // GET: api/v1/robot/1
+  // GET: /robot/1
   [HttpGet("{id}")]
+  [SwaggerOperation(
+    Summary = "Gets details of the specified robot",
+    OperationId = "Robot.GetRobot")
+  ]
   public async Task<ActionResult<RobotDTO>> GetRobot(int id)
   {
     var robot = await _context.Robots.FindAsync(id);
@@ -39,8 +48,12 @@ public class RobotController : ControllerBase
     return RobotToDTO(robot);
   }
 
-  // PUT: api/v1/robot/1
+  // PUT: /robot/1
   [HttpPut("{id}")]
+  [SwaggerOperation(
+    Summary = "Update a specified robot",
+    OperationId = "Robot.PutRobot")
+  ]
   public async Task<IActionResult> PutRobot(int id, RobotDTO robotDTO)
   {
     if (id != robotDTO.Id)
@@ -66,8 +79,12 @@ public class RobotController : ControllerBase
     return NoContent();
   }
 
-  // POST: api/v1/robot
+  // POST: /robot
   [HttpPost]
+  [SwaggerOperation(
+    Summary = "Create a new robot",
+    OperationId = "Robot.PostRobot")
+  ]
   public async Task<ActionResult<RobotDTO>> PostRobot(RobotDTO robotDTO)
   {
     var robot = new Robot
@@ -84,8 +101,12 @@ public class RobotController : ControllerBase
                      RobotToDTO(robot));
   }
 
-  // DELETE: api/v1/robot/1
+  // DELETE: /robot/1
   [HttpDelete("{id}")]
+  [SwaggerOperation(
+    Summary = "Delete specified robot",
+    OperationId = "Robot.DeleteRobot")
+  ]
   public async Task<IActionResult> DeleteRobot(int id)
   {
     var robot = await _context.Robots.FindAsync(id);
