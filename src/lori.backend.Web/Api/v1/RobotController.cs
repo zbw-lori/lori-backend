@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace lori.backend.Web.Api.v1;
-[Route ("api/v1/[controller]")]
-[ApiController]
+
 public class RobotController : BaseApiController
 {
   private readonly LoriDbContext _context;
