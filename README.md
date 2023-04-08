@@ -15,4 +15,4 @@ dotnet ef database update --project "src/lori.backend.Infrastructure" --startup-
 ```
 
 ## Swagger UI
-The Swagger UI can be found at https://localhost:<port>/swagger
+The Swagger UI can be found at https://localhost:57679/swagger
