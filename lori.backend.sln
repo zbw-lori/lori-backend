@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		CleanArchitecture.nuspec = CleanArchitecture.nuspec
 		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lori.backend.SharedKernel", "src\lori.backend.SharedKernel\lori.backend.SharedKernel.csproj", "{744AD1DC-E83E-4ACE-BE57-395395D6E357}"
