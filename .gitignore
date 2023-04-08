@@ -6,6 +6,7 @@
 # LORI specifics
 Migrations/
 log*.txt
+.vscode/
 
 # User-specific files
 *.rsuser
