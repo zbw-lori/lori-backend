@@ -42,12 +42,21 @@ public static class SeedData
   }
   public static void PopulateTestData(LoriDbContext dbContext)
   {
+    RemoveExistingAddresses(dbContext);
+    AddAddresses(dbContext);
+  }
+
+  private static void RemoveExistingAddresses(LoriDbContext dbContext)
+  {
     foreach (var address in dbContext.Addresses)
     {
       dbContext.Remove(address);
     }
     dbContext.SaveChanges();
+  }
 
+  private static void AddAddresses(LoriDbContext dbContext)
+  {
     dbContext.Add(new Address
     {
       Street = "Musterstrasse",
