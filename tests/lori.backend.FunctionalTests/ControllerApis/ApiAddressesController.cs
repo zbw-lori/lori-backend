@@ -66,29 +66,31 @@ public class ApiAddressesController : IClassFixture<CustomWebApplicationFactory<
     result.EnsureSuccessStatusCode();
   }
 
+  [Fact]
   public async Task ReturnsSuccessUpdateAddress()
   {
     var newAddress = new Address
     {
-      Street = "Teststrasse",
-      StreetNumber = 33,
-      City = "TestStadt",
-      CityCode = 1234
+      Street = "9th Street",
+      StreetNumber = 9,
+      City = "Brooklyn",
+      CityCode = 11211
     };
     var content = new StringContent(JsonConvert.SerializeObject(newAddress), Encoding.UTF8, "application/json");
 
-    var result = await _client.PatchAsync("/api/v1/address", content);
+    var result = await _client.PutAsync("/api/v1/address/2", content);
 
     result.EnsureSuccessStatusCode();
-    var address = await _client.GetAndDeserializeAsync<Address>("/api/v1/address/3");
+    var address = await _client.GetAndDeserializeAsync<Address>("/api/v1/address/2");
     Assert.Equal(newAddress.Street, address.Street);
     Assert.Equal(newAddress.StreetNumber, address.StreetNumber);
     Assert.Equal(newAddress.City, address.City);
     Assert.Equal(newAddress.CityCode, address.CityCode);
   }
 
+  [Fact]
   public async Task ReturnsSuccessRemoveAddress()
   {
-    var result = await _client.DeleteAndEnsureNoContentAsync("/api/v1/address/3");
+    var result = await _client.DeleteAndEnsureNoContentAsync("/api/v1/address/1");
   }
 }
