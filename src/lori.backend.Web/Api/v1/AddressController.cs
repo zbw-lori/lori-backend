@@ -1,6 +1,5 @@
 ﻿using lori.backend.Infrastructure.Data;
 using lori.backend.Infrastructure.Models;
-using lori.backend.Web.ApiModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
@@ -79,7 +78,7 @@ public class AddressController : BaseApiController
     Summary = "Create a new address",
     OperationId = "Address.PostAddress")
   ]
-  public async Task<ActionResult<RobotDTO>> PostAddress(Address newAddress)
+  public async Task<ActionResult<Address>> PostAddress(Address newAddress)
   {
     var address = new Address
     {
