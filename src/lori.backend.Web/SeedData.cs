@@ -44,6 +44,9 @@ public static class SeedData
   {
     RemoveExistingAddresses(dbContext);
     AddAddresses(dbContext);
+
+    RemoveExistingCustomers(dbContext);
+    AddCustomers(dbContext);
   }
 
   private static void RemoveExistingAddresses(LoriDbContext dbContext)
@@ -70,6 +73,36 @@ public static class SeedData
       StreetNumber = 93,
       City = "Brooklyn",
       CityCode = 11211
+    });
+    dbContext.SaveChanges();
+  }
+
+  private static void RemoveExistingCustomers(LoriDbContext dbContext)
+  {
+    foreach (var customer in dbContext.Customers)
+    {
+      dbContext.Remove(customer);
+    }
+    dbContext.SaveChanges();
+  }
+
+  private static void AddCustomers(LoriDbContext dbContext)
+  {
+    dbContext.Add(new Customer
+    {
+      Forename = "Max",
+      Surename = "Muster",
+      Email = "max.muster@test.ch",
+      Phone = "202-555-0102",
+      AddressId = 1,
+    });
+    dbContext.Add(new Customer
+    {
+      Forename = "Peter",
+      Surename = "Parker",
+      Email = "peter.parker@spider.com",
+      Phone = "478-488-8628",
+      AddressId = 2,
     });
     dbContext.SaveChanges();
   }
