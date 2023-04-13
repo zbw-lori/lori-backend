@@ -44,4 +44,4 @@ jobs:
                 context: .
                 platforms: linux/amd64
                 push: true
-                tags: $LATEST_TAG
+                tags: lori-backend:0.0.1-rc.1
