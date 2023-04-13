@@ -1,5 +1,4 @@
-﻿using System;
-namespace lori.backend.Infrastructure.Models;
+﻿namespace lori.backend.Infrastructure.Models;
 
 public class Customer
 {
@@ -9,6 +8,6 @@ public class Customer
   public string Email { get; set; } = null!;
   public string Phone { get; set; } = null!;
   public int AddressId { get; set; }
-  public Address Address { get; set; } = null!;
+  public Address? Address { get; set; }
 }
 

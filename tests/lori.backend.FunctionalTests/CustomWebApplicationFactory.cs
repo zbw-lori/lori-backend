@@ -1,12 +1,7 @@
-﻿using lori.backend.Core.Interfaces;
-using lori.backend.Infrastructure;
-using lori.backend.Infrastructure.Data;
-using lori.backend.UnitTests;
+﻿using lori.backend.Infrastructure.Data;
 using lori.backend.Web;
-using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
