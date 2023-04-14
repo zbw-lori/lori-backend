@@ -8,4 +8,5 @@ public class Login
   public Byte[] Password { get; set; } = null!;
   public int RoleId { get; set; }
   public Role? Role { get; set; }
+  public bool IsActive { get; set; }
 }
