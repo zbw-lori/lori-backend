@@ -20,6 +20,7 @@ public class LoriDbContext : DbContext
   public DbSet<Address> Addresses { get; set; } = null!;
   public DbSet<Customer> Customers { get; set; } = null!;
   public DbSet<Item> Items { get; set; } = null!;
+  public DbSet<Role> Roles { get; set; } = null!;
   public DbSet<Login> Logins { get; set; } = null!;
   public DbSet<Order> Orders { get; set; } = null!;
 
