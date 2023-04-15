@@ -5,7 +5,7 @@ public class Login
 {
   [Key]
   public string Username { get; set; } = null!;
-  public Byte[] Password { get; set; } = null!;
+  public string PasswordHash { get; set; } = null!;
   public int RoleId { get; set; }
   public Role? Role { get; set; }
   public bool IsActive { get; set; }
