@@ -8,8 +8,8 @@ on:
       - '*'
 
 env:
-    TAG: lori-backend:0.0.1-rc.1
-    
+    TAG: lori-backend:${{ github.ref_name }}
+
 jobs:
     docker:
         permissions:
