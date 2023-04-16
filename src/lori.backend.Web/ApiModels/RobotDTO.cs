@@ -6,4 +6,5 @@ public class RobotDTO
   public string Name { get; set; } = null!;
   public string Description { get; set; } = null!;
   public string Model { get; set; } = null!;
+  public bool IsAvailable { get; set; }
 }

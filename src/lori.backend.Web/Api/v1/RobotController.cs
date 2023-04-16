@@ -67,6 +67,7 @@ public class RobotController : BaseApiController
     robot.Name = robotDTO.Name;
     robot.Description = robotDTO.Description;
     robot.Model = robotDTO.Model;
+    robot.IsAvailable = robotDTO.IsAvailable;
     try
     {
       await _context.SaveChangesAsync();
@@ -90,7 +91,8 @@ public class RobotController : BaseApiController
     {
       Name = robotDTO.Name,
       Description = robotDTO.Description,
-      Model = robotDTO.Model
+      Model = robotDTO.Model,
+      IsAvailable = robotDTO.IsAvailable
     };
     _context.Robots.Add(robot);
     await _context.SaveChangesAsync();
@@ -129,6 +131,7 @@ public class RobotController : BaseApiController
       Id = robot.Id,
       Name = robot.Name,
       Description = robot.Description,
-      Model = robot.Model
+      Model = robot.Model,
+      IsAvailable = robot.IsAvailable
     };
 }
