@@ -65,6 +65,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
       IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secret!)),
     });
 
+var allowSpecificOrigins = "_allowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy(name: allowSpecificOrigins,
+                    policy =>
+                    {
+                      policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+});
+
 // add list services for diagnostic purposes - see https://github.com/ardalis/AspNetCoreStartupServices
 builder.Services.Configure<ServiceConfig>(config =>
 {
@@ -96,6 +108,7 @@ else
   app.UseHsts();
 }
 app.UseRouting();
+app.UseCors(allowSpecificOrigins);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
