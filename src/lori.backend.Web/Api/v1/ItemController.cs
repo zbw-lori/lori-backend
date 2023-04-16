@@ -1,5 +1,5 @@
 ﻿using lori.backend.Infrastructure.Data;
-using lori.backend.Infrastructure.Models;
+using lori.backend.Core.Models;
 using lori.backend.Web.ApiModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

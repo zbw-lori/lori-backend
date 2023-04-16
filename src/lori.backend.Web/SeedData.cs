@@ -1,6 +1,6 @@
 ﻿using lori.backend.Core.ProjectAggregate;
 using lori.backend.Infrastructure.Data;
-using lori.backend.Infrastructure.Models;
+using lori.backend.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace lori.backend.Web;
