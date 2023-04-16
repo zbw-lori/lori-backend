@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using lori.backend.Core.Interfaces;
+using lori.backend.Infrastructure.Data;
 using lori.backend.Infrastructure.Models;
 using lori.backend.Web.ApiModels;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +14,15 @@ namespace lori.backend.Web.Api.v1;
 
 public class AuthController : BaseApiController
 {
-  public static Login login = new();
+  private readonly LoriDbContext _context;
   private readonly IConfiguration _configuration;
   private readonly ILoginService _loginService;
 
-  public AuthController(IConfiguration configuration, ILoginService loginService)
+  public AuthController(LoriDbContext context,
+    IConfiguration configuration,
+    ILoginService loginService)
   {
+    _context = context;
     _configuration = configuration;
     _loginService = loginService;
   }
@@ -31,20 +35,28 @@ public class AuthController : BaseApiController
   }
 
   [HttpPost("register")]
-  public ActionResult<Login> Register(LoginDto request)
+  public async Task<ActionResult<Login>> Register(LoginDto request)
   {
     string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-    login.Username = request.Username;
-    login.PasswordHash = passwordHash;
+    var login = new Login
+    {
+      Username = request.Username,
+      PasswordHash = passwordHash,
+      RoleId = 2 //set a default role!
+    };
+
+    _context.Logins.Add(login);
+    await _context.SaveChangesAsync();
 
     return Ok(login);
   }
 
   [HttpPost("login")]
-  public ActionResult<Login> Login(LoginDto request)
+  public async Task<ActionResult<Login>> Login(LoginDto request)
   {
-    if (login.Username != request.Username)
+    var login = await _context.Logins.FindAsync(request.Username);
+    if (login == null)
     {
       return BadRequest("User not found");
     }
