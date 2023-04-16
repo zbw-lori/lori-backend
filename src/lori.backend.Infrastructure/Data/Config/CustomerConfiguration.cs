@@ -1,4 +1,4 @@
-﻿using lori.backend.Infrastructure.Models;
+﻿using lori.backend.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

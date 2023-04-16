@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using lori.backend.Infrastructure.Models;
+using lori.backend.Core.Models;
 using lori.backend.SharedKernel;
 using lori.backend.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
