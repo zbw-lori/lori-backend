@@ -1,14 +1,9 @@
-﻿using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using lori.backend.Core.Interfaces;
+﻿using lori.backend.Core.Interfaces;
 using lori.backend.Infrastructure.Data;
 using lori.backend.Infrastructure.Models;
 using lori.backend.Web.ApiModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace lori.backend.Web.Api.v1;
 
@@ -17,14 +12,17 @@ public class AuthController : BaseApiController
   private readonly LoriDbContext _context;
   private readonly IConfiguration _configuration;
   private readonly ILoginService _loginService;
+  private readonly ITokenService<Login> _tokenService;
 
   public AuthController(LoriDbContext context,
     IConfiguration configuration,
-    ILoginService loginService)
+    ILoginService loginService,
+    ITokenService<Login> tokenService)
   {
     _context = context;
     _configuration = configuration;
     _loginService = loginService;
+    _tokenService = tokenService;
   }
 
   [HttpGet, Authorize]
@@ -66,60 +64,8 @@ public class AuthController : BaseApiController
       return BadRequest("Wrong password.");
     }
 
-    string token = CreateToken(login);
+    string token = _tokenService.CreateToken(login);
 
     return Ok(token);
-  }
-
-  private string CreateToken(Login login)
-  {
-    var expiration = DateTime.UtcNow.AddMinutes(30);
-    var token = CreateJwtToken(CreateClaims(login), CreateSigningCredentials(), expiration);
-
-    var tokenHandler = new JwtSecurityTokenHandler();
-    return tokenHandler.WriteToken(token);
-  }
-
-  private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials, DateTime expiration)
-  {
-    return new(
-                _configuration.GetValue<string>("AppSettings:Issuer"),
-                _configuration.GetValue<string>("AppSettings:Audience"),
-                claims,
-                expires: expiration,
-                signingCredentials: credentials
-            );
-  }
-
-  private List<Claim> CreateClaims(Login login)
-  {
-    try
-    {
-      var claims = new List<Claim>
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, "TokenForTheApiWithAuth"),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
-                    //new Claim(ClaimTypes.NameIdentifier, login.id),
-                    new Claim(ClaimTypes.Name, login.Username),
-                    //new Claim(ClaimTypes.Email, login.Email)
-                };
-      return claims;
-    }
-    catch (Exception e)
-    {
-      Console.WriteLine(e);
-      throw;
-    }
-  }
-
-  private SigningCredentials CreateSigningCredentials()
-  {
-    return new SigningCredentials(
-        new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:Token")!)
-        ),
-        SecurityAlgorithms.HmacSha256
-    );
   }
 }

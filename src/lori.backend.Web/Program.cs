@@ -4,6 +4,7 @@ using Autofac.Extensions.DependencyInjection;
 using lori.backend.Core;
 using lori.backend.Core.Interfaces;
 using lori.backend.Infrastructure;
+using lori.backend.Infrastructure.Models;
 using lori.backend.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -30,6 +31,7 @@ builder.Services.AddDbContext(connectionString!);
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<ITokenService<Login>, TokenService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSwaggerGen(c =>
