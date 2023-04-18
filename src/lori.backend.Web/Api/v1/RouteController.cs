@@ -95,12 +95,15 @@ public class RouteController : BaseApiController
       OrderId = RouteDTO.OrderId,
     };
 
-    var store = await _context.Stores.FindAsync(RouteDTO.OrderId);
-    if (store == null)
+    var robot = await _context.Robots.FindAsync(RouteDTO.RobotId);
+    var order = await _context.Orders.FindAsync(RouteDTO.OrderId);
+
+    if (order == null || robot == null)
     {
       return NotFound();
     }
-    Route.OrderId = store.Id;
+    Route.RobotId = robot.Id;
+    Route.OrderId = order.Id;
 
     _context.Routes.Add(Route);
     await _context.SaveChangesAsync();
