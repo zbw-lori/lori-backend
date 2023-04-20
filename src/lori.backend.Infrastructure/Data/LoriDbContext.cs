@@ -26,7 +26,6 @@ public class LoriDbContext : DbContext
 
   public DbSet<OrderItem> OrderItems { get; set; } = null!;
   public DbSet<Robot> Robots { get; set; } = null!;
-  public DbSet<Role> Roles { get; set; } = null!;
   public DbSet<Route> Routes { get; set; } = null!;
   public DbSet<Store> Stores { get; set; } = null!;
 

@@ -1,6 +1,6 @@
 ﻿using lori.backend.Core.Interfaces;
+using lori.backend.Core.Models;
 using lori.backend.Infrastructure.Data;
-using lori.backend.Infrastructure.Models;
 using lori.backend.Web.ApiModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
