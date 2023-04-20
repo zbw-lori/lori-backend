@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace lori.backend.Infrastructure.Models;
+namespace lori.backend.Core.Models;
 public class Route
 {
   public int Id { get; set; }

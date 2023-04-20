@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using Ardalis.HttpClientTestExtensions;
-using lori.backend.Infrastructure.Models;
+using lori.backend.Core.Models;
 using Newtonsoft.Json;
 using Xunit;
 

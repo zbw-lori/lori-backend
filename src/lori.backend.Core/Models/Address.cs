@@ -1,5 +1,4 @@
-﻿using System;
-namespace lori.backend.Infrastructure.Models;
+﻿namespace lori.backend.Core.Models;
 
 public class Address
 {
