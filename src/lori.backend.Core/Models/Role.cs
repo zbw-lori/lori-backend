@@ -1,4 +1,4 @@
-﻿namespace lori.backend.Core.Models;
+namespace lori.backend.Core.Models;
 public class Role
 {
   public int Id { get; set; }

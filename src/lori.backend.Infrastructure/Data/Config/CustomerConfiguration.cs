@@ -10,5 +10,9 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     builder.HasOne(c => c.Address)
       .WithMany()
       .HasForeignKey(c => c.AddressId);
+
+    builder.HasOne(c => c.Login)
+      .WithOne()
+      .HasForeignKey<Customer>(c => c.Username);
   }
 }
