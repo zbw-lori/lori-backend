@@ -21,7 +21,7 @@ public class MqttService : IMqttService
     _port = port;
   }
 
-  public async void Connect()
+  public async Task Connect()
   {
     if (_client.IsConnected)
     {
@@ -38,12 +38,12 @@ public class MqttService : IMqttService
     DumpToConsole(response);
   }
 
-  public async void Disconnect()
+  public async Task Disconnect()
   {
     await _client.DisconnectAsync(MqttClientDisconnectReason.ImplementationSpecificError);
   }
 
-  public async void Publish(string topic, string data)
+  public async Task Publish(string topic, string data)
   {
     var applicationMessage = new MqttApplicationMessageBuilder()
                     .WithTopic(topic)
@@ -54,7 +54,7 @@ public class MqttService : IMqttService
     DumpToConsole(response);
   }
 
-  public async void Subscribe(string topic, Func<MqttApplicationMessageReceivedEventArgs, Task> callback)
+  public async Task Subscribe(string topic, Func<MqttApplicationMessageReceivedEventArgs, Task> callback)
   {
     var subscribeOptions = _factory.CreateSubscribeOptionsBuilder()
                     .WithTopicFilter(f => f.WithTopic($"{topic}"))
@@ -65,7 +65,7 @@ public class MqttService : IMqttService
     DumpToConsole(response);
   }
 
-  public async void Unsubscribe(string topic)
+  public async Task Unsubscribe(string topic)
   {
     var unSubscribeOptions = _factory.CreateUnsubscribeOptionsBuilder()
                     .WithTopicFilter(topic)
