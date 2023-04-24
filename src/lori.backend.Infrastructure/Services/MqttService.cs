@@ -12,7 +12,7 @@ public class MqttService : IMqttService
   private readonly string _server;
   private readonly int _port;
 
-  public MqttService(string clientId = "backend", string server = "localhost", int port = 1803)
+  public MqttService(string clientId = "lori.backend", string server = "broker.emqx.io", int port = 1883)
   {
     _factory = new MqttFactory();
     _client = _factory.CreateMqttClient();

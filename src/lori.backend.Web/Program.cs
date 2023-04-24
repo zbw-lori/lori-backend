@@ -32,6 +32,7 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ITokenService<Login>, TokenService>();
+builder.Services.AddScoped<IMqttService, MqttService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSwaggerGen(c =>
