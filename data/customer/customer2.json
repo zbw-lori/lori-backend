@@ -1,0 +1,27 @@
+{
+    "id": 2,
+    "forename": "Max",
+    "surename": "Muster",
+    "email": "max@muster.ch",
+    "phone": "0123456789",
+    "addressId": 2,
+    "address": {
+      "id": 0,
+      "street": "string",
+      "streetNumber": 0,
+      "city": "string",
+      "cityCode": 0
+    },
+    "username": "max.muster",
+    "login": {
+      "username": "string",
+      "passwordHash": "string",
+      "isActive": true,
+      "roleId": 0,
+      "role": {
+        "id": 0,
+        "name": "string",
+        "description": "string"
+      }
+    }
+  }

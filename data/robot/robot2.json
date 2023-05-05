@@ -1,0 +1,7 @@
+{
+    "id": 2,
+    "name": "SomeOtherRobot",
+    "description": "I am not groot",
+    "model": "V12Turbo",
+    "isAvailable": false
+  }
