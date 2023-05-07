@@ -5,7 +5,7 @@ public class OrderDTO
   public int Id { get; set; }
   public string Status { get; set; } = null!;
 
-  public int Priority { get; set; }
+  public string Priority { get; set; } = null!;
 
   public DateTime Created { get; set; }
 
