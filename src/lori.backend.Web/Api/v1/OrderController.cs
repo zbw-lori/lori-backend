@@ -65,7 +65,13 @@ public class OrderController : BaseApiController
       return NotFound();
     }
     Order.Status = OrderDTO.Status;
-    Order.Priority = OrderDTO.Priority;
+    Priority priority;
+    if (!Enum.TryParse<Priority>(OrderDTO.Priority, true, out priority))
+    {
+      var prios = String.Join(", ", Enum.GetNames<Priority>());
+      return BadRequest($"Invalid priority! Use one of: {prios}");
+    }
+    Order.Priority = priority;
     Order.Created = OrderDTO.Created;
     ReceiptType receiptType;
     if (!Enum.TryParse<ReceiptType>(OrderDTO.ReceiptType, true, out receiptType))
@@ -101,10 +107,17 @@ public class OrderController : BaseApiController
       return BadRequest($"Invalid receipt type! Use one of: {types}");
     }
 
+    Priority priority;
+    if (!Enum.TryParse<Priority>(OrderDTO.Priority, true, out priority))
+    {
+      var prios = String.Join(", ", Enum.GetNames<Priority>());
+      return BadRequest($"Invalid priority! Use one of: {prios}");
+    }
+
     var Order = new Order
     {
       Status = OrderDTO.Status,
-      Priority = OrderDTO.Priority,
+      Priority = priority,
       Created = OrderDTO.Created,
       ReceiptType = receiptType,
       CustomerId = OrderDTO.CustomerId
@@ -153,7 +166,7 @@ public class OrderController : BaseApiController
     {
       Id = Order.Id,
       Status = Order.Status,
-      Priority = Order.Priority,
+      Priority = Order.Priority.ToString(),
       Created = Order.Created,
       ReceiptType = Order.ReceiptType.ToString(),
       CustomerId = Order.CustomerId
