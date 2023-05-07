@@ -86,7 +86,7 @@ public class CustomerController : BaseApiController
     Summary = "Create a new customer",
     OperationId = "Customer.PostCustomer")
   ]
-  public async Task<ActionResult<Customer>> PostCustomer(CustomerDTO customerDto)
+  public async Task<ActionResult<CustomerDTO>> PostCustomer(CustomerDTO customerDto)
   {
     var customer = new Customer
     {
