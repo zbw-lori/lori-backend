@@ -12,4 +12,3 @@ public class Customer
   public string? Username { get; set; }
   public Login? Login { get; set; }
 }
-
