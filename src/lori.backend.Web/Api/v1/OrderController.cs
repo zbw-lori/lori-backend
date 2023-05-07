@@ -67,7 +67,13 @@ public class OrderController : BaseApiController
     Order.Status = OrderDTO.Status;
     Order.Priority = OrderDTO.Priority;
     Order.Created = OrderDTO.Created;
-    Order.ReceiptType = OrderDTO.ReceiptType;
+    ReceiptType receiptType;
+    if (!Enum.TryParse<ReceiptType>(OrderDTO.ReceiptType, true, out receiptType))
+    {
+      var types = String.Join(", ", Enum.GetNames<ReceiptType>());
+      return BadRequest($"Invalid receipt type! Use one of: {types}");
+    }
+    Order.ReceiptType = receiptType;
     Order.CustomerId = OrderDTO.CustomerId;
     try
     {
@@ -88,14 +94,21 @@ public class OrderController : BaseApiController
   ]
   public async Task<ActionResult<OrderDTO>> PostOrder(OrderDTO OrderDTO)
   {
+    ReceiptType receiptType;
+    if (!Enum.TryParse<ReceiptType>(OrderDTO.ReceiptType, true, out receiptType))
+    {
+      var types = String.Join(", ", Enum.GetNames<ReceiptType>());
+      return BadRequest($"Invalid receipt type! Use one of: {types}");
+    }
+
     var Order = new Order
     {
       Status = OrderDTO.Status,
       Priority = OrderDTO.Priority,
       Created = OrderDTO.Created,
-      ReceiptType = OrderDTO.ReceiptType,
+      ReceiptType = receiptType,
       CustomerId = OrderDTO.CustomerId
-  };
+    };
 
     var customer = await _context.Customers.FindAsync(OrderDTO.CustomerId);
     if (customer == null)
@@ -142,7 +155,7 @@ public class OrderController : BaseApiController
       Status = Order.Status,
       Priority = Order.Priority,
       Created = Order.Created,
-      ReceiptType = Order.ReceiptType,
+      ReceiptType = Order.ReceiptType.ToString(),
       CustomerId = Order.CustomerId
     };
 }
