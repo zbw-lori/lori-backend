@@ -9,5 +9,8 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
   {
     builder.Property(o => o.ReceiptType)
       .HasConversion(o => o.ToString(), o => Enum.Parse<ReceiptType>(o));
+
+    builder.Property(o => o.Priority)
+      .HasConversion(o => o.ToString(), o => Enum.Parse<Priority>(o));
   }
 }
