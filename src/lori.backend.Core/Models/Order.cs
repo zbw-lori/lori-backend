@@ -5,7 +5,7 @@ public class Order
   public string Status { get; set; } = null!;
   public int Priority { get; set; }
   public DateTime Created { get; set; }
-  public string ReceiptType { get; set;} = null!;
+  public ReceiptType ReceiptType { get; set; }
   public int CustomerId { get; set; }
   public Customer Customer { get; set; } = null!;
 }
