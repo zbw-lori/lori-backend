@@ -66,6 +66,7 @@ public class ItemController : BaseApiController
     }
     Item.Name = ItemDTO.Name;
     Item.Price = ItemDTO.Price;
+    Item.StockQuantity = ItemDTO.StockQuantity;
     Item.StoreId = ItemDTO.StoreId;
     try
     {
@@ -90,6 +91,7 @@ public class ItemController : BaseApiController
     {
       Name = ItemDTO.Name,
       Price = ItemDTO.Price,
+      StockQuantity = ItemDTO.StockQuantity,
       StoreId = ItemDTO.StoreId,
     };
 
