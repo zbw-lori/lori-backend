@@ -65,7 +65,6 @@ public class StoreController : BaseApiController
       return NotFound();
     }
     Store.Name = StoreDTO.Name;
-    Store.Quantity = StoreDTO.Quantity;
     try
     {
       await _context.SaveChangesAsync();
@@ -88,7 +87,6 @@ public class StoreController : BaseApiController
     var Store = new Store
     {
       Name = StoreDTO.Name,
-      Quantity = StoreDTO.Quantity,
     };
     _context.Stores.Add(Store);
     await _context.SaveChangesAsync();
@@ -126,6 +124,5 @@ public class StoreController : BaseApiController
     {
       Id = Store.Id,
       Name = Store.Name,
-      Quantity = Store.Quantity
     };
 }
