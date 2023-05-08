@@ -1,0 +1,7 @@
+{
+    "id": 2,
+    "name": "SomeOtherItem",
+    "price": 9.6,
+    "stockQuantity": 6,
+    "storeId": 1
+  }

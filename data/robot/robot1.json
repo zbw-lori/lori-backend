@@ -1,0 +1,7 @@
+{
+    "id": 1,
+    "name": "SomeRobot",
+    "description": "I am groot",
+    "model": "V8Turbo",
+    "isAvailable": true
+  }

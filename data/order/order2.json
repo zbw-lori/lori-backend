@@ -1,0 +1,8 @@
+{
+    "id": 2,
+    "status": "SomeOtherOrder",
+    "priority": 2,
+    "created": "2023-05-04T20:15:16.017Z",
+    "receiptType": "pickup",
+    "customerId": 2
+  }
