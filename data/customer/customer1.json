@@ -5,23 +5,5 @@
     "email": "ana@bolika.run",
     "phone": "0123456789",
     "addressId": 1,
-    "address": {
-      "id": 0,
-      "street": "string",
-      "streetNumber": 0,
-      "city": "string",
-      "cityCode": 0
-    },
     "username": "ana.bolika",
-    "login": {
-      "username": "string",
-      "passwordHash": "string",
-      "isActive": true,
-      "roleId": 0,
-      "role": {
-        "id": 0,
-        "name": "string",
-        "description": "string"
-      }
-    }
-  }
+}
