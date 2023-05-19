@@ -4,8 +4,6 @@ namespace lori.backend.Core.Models;
 public class Route
 {
   public int Id { get; set; }
-  [Column(TypeName = "json")]
-  public string PriorityList { get; set; } = null!;
 
   public int RobotId { get; set; }
   public Robot Robot { get; set; } = null!;
