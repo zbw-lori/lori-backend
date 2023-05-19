@@ -66,7 +66,6 @@ public class RouteController : BaseApiController
     {
       return NotFound();
     }
-    Route.PriorityList = RouteDTO.PriorityList;
     Route.RobotId = RouteDTO.RobotId;
     Route.OrderId = RouteDTO.OrderId;
     try
@@ -90,7 +89,6 @@ public class RouteController : BaseApiController
   {
     var Route = new Core.Models.Route
     {
-      PriorityList = RouteDTO.PriorityList,
       RobotId = RouteDTO.RobotId,
       OrderId = RouteDTO.OrderId,
     };
@@ -140,7 +138,6 @@ public class RouteController : BaseApiController
     new RouteDTO
     {
       Id = Route.Id,
-      PriorityList = Route.PriorityList,
       RobotId = Route.RobotId,
       OrderId = Route.OrderId
     };
