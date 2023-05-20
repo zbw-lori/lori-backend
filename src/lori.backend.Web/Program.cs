@@ -129,6 +129,13 @@ app.UseEndpoints(endpoints =>
   endpoints.MapDefaultControllerRoute();
 });
 
+// Call services at startup
+using (var scope = app.Services.CreateScope())
+{
+  var mqtt = scope.ServiceProvider.GetRequiredService<IMqttRegistrationService>();
+  await mqtt.Start();
+}
+
 app.Run();
 
 // Make the implicit Program.cs class public, so integration tests can reference the correct assembly for host building
