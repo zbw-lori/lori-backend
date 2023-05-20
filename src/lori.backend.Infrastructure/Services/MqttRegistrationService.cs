@@ -1,4 +1,4 @@
-using System.Text;
+using System.Text.Json;
 using lori.backend.Core.Interfaces;
 using lori.backend.Core.Models;
 using lori.backend.Infrastructure.Data;
@@ -20,20 +20,36 @@ public class MqttRegistrationService : IMqttRegistrationService
     await _mqttService.Connect();
     await _mqttService.Subscribe("register", async callback =>
     {
-      var clientId = Encoding.Default.GetString(callback.ApplicationMessage.Payload);
-      Console.WriteLine($"Register Client: {clientId}");
+      var request = JsonSerializer.Deserialize<RegistrationRequest>(callback.ApplicationMessage.Payload);
 
-      var robot = new Robot
+      if (request != null && request.ClientId != null)
       {
-        Name = "Test",
-        Description = "Test",
-        Model = clientId,
-        IsAvailable = true
-      };
-      _context.Robots.Add(robot);
-      await _context.SaveChangesAsync();
+        Console.WriteLine($"Register Client: {request.ClientId}");
 
-      await _mqttService.Publish($"confirm/{clientId}", $"RobotId: {robot.Id}");
+        var robot = new Robot
+        {
+          Name = "Test",
+          Description = "Test",
+          Model = request.ClientId,
+          IsAvailable = true
+        };
+        _context.Robots.Add(robot);
+        await _context.SaveChangesAsync();
+
+        var response = new RegistrationResponse() { RobotId = robot.Id };
+        var data = JsonSerializer.Serialize<RegistrationResponse>(response);
+        await _mqttService.Publish($"confirm/{request.ClientId}", data);
+      }
     });
   }
+}
+
+class RegistrationRequest
+{
+  public string ClientId { get; set; } = null!;
+}
+
+class RegistrationResponse
+{
+  public int RobotId { get; set; }
 }
