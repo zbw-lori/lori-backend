@@ -16,7 +16,8 @@ public static class StartupSetup
   public static void AddMqttContext(this IServiceCollection services, string connectionString)
   {
     var values = GetKeyValuePairs(connectionString);
-    services.AddScoped<IMqttService, MqttService>(provider => new MqttService(values["clientId"], values["server"], int.Parse(values["port"])));
+    services.AddSingleton<IMqttService, MqttService>(provider => new MqttService(values["clientId"], values["server"], int.Parse(values["port"])));
+    services.AddSingleton<IMqttRegistrationService, MqttRegistrationService>();
   }
 
   private static Dictionary<string, string> GetKeyValuePairs(string connectionString)
