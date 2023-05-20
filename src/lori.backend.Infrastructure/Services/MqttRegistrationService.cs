@@ -26,15 +26,21 @@ public class MqttRegistrationService : IMqttRegistrationService
       {
         Console.WriteLine($"Register Client: {request.ClientId}");
 
-        var robot = new Robot
+        Robot? robot;
+        robot = _context.Robots.SingleOrDefault(r => r.Model.Equals(request.ClientId));
+        if (robot == null)
         {
-          Name = "Test",
-          Description = "Test",
-          Model = request.ClientId,
-          IsAvailable = true
-        };
-        _context.Robots.Add(robot);
-        await _context.SaveChangesAsync();
+          robot = new Robot
+          {
+            Name = "Test",
+            Description = "Test",
+            Model = request.ClientId,
+            IsAvailable = true
+          };
+
+          _context.Robots.Add(robot);
+          await _context.SaveChangesAsync();
+        }
 
         var response = new RegistrationResponse() { RobotId = robot.Id };
         var data = JsonSerializer.Serialize<RegistrationResponse>(response);
