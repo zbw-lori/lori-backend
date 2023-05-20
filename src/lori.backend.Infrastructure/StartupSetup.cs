@@ -18,6 +18,7 @@ public static class StartupSetup
     var values = GetKeyValuePairs(connectionString);
     services.AddSingleton<IMqttService, MqttService>(provider => new MqttService(values["clientId"], values["server"], int.Parse(values["port"])));
     services.AddSingleton<IMqttRegistrationService, MqttRegistrationService>();
+    services.AddSingleton<IMqttLiveDataService, MqttLiveDataService>();
   }
 
   private static Dictionary<string, string> GetKeyValuePairs(string connectionString)

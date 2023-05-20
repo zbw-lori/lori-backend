@@ -132,8 +132,8 @@ app.UseEndpoints(endpoints =>
 // Call services at startup
 using (var scope = app.Services.CreateScope())
 {
-  var mqtt = scope.ServiceProvider.GetRequiredService<IMqttRegistrationService>();
-  await mqtt.Start();
+  await scope.ServiceProvider.GetRequiredService<IMqttRegistrationService>().Start();
+  await scope.ServiceProvider.GetRequiredService<IMqttLiveDataService>().Start();
 }
 
 app.Run();
