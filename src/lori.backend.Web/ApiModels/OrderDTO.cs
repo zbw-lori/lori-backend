@@ -7,7 +7,8 @@ public class OrderDTO
 
   public string Priority { get; set; } = null!;
 
-  public DateTime Created { get; set; }
+  public DateTime EarliestDelivery { get; set; }
+  public DateTime LatestDelivery { get; set; }
 
   public string ReceiptType { get; set; } = null!;
   public int CustomerId { get; set; }
