@@ -50,12 +50,12 @@ public class MqttRegistrationService : IMqttRegistrationService
   }
 }
 
-class RegistrationRequest
+public class RegistrationRequest
 {
   public string ClientId { get; set; } = null!;
 }
 
-class RegistrationResponse
+public class RegistrationResponse
 {
   public int RobotId { get; set; }
 }
