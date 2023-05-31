@@ -18,6 +18,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="all" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" />
+    <PackageReference Include="MQTTnet" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>

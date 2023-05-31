@@ -32,6 +32,8 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ITokenService<Login>, TokenService>();
+connectionString = builder.Configuration.GetConnectionString("MqttConnection");
+builder.Services.AddMqttContext(connectionString!);
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSwaggerGen(c =>
@@ -126,6 +128,13 @@ app.UseEndpoints(endpoints =>
 {
   endpoints.MapDefaultControllerRoute();
 });
+
+// Call services at startup
+using (var scope = app.Services.CreateScope())
+{
+  await scope.ServiceProvider.GetRequiredService<IMqttRegistrationService>().Start();
+  await scope.ServiceProvider.GetRequiredService<IMqttLiveDataService>().Start();
+}
 
 app.Run();
 
