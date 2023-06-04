@@ -2,6 +2,11 @@
 
 ## set up database with `dotnet` cli
 
+```shell
+# install ef cli
+dotnet tool install --global dotnet-ef
+```
+
 ### create migration
 
 ```shell
