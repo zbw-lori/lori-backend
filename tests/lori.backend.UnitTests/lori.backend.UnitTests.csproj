@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\lori.backend.Core\lori.backend.Core.csproj" />
+    <ProjectReference Include="..\..\src\lori.backend.Infrastructure\lori.backend.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
