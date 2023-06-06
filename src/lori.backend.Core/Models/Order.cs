@@ -6,6 +6,7 @@ public class Order
   public Priority Priority { get; set; }
   public DateTime EarliestDelivery { get; set; }
   public DateTime LatestDelivery { get; set; }
+  public DateTime? SetDelivery { get; set; }
   public ReceiptType ReceiptType { get; set; }
   public int CustomerId { get; set; }
   public Customer Customer { get; set; } = null!;
