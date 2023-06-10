@@ -15,6 +15,17 @@ public class OrderItemController : BaseApiController
     _context = context;
   }
 
+  // GET: /orderItem
+  [HttpGet]
+  [SwaggerOperation(
+    Summary = "Gets a list of all OrderItems",
+    OperationId = "OrderItem.GetAllOrderItems")
+  ]
+  public async Task<ActionResult<IEnumerable<OrderItem>>> GetAllOrderItems()
+  {
+    return await _context.OrderItems.ToListAsync();
+  }
+
   // GET: /orderItem/1
   [HttpGet("{id}")]
   [SwaggerOperation(
