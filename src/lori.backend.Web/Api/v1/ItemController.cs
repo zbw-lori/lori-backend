@@ -26,7 +26,7 @@ public class ItemController : BaseApiController
   {
     await _context.Stores.LoadAsync();
     _context.Items.Include(i => i.Store);
-    return await _context.Items.Select(x => ItemToDTO(x)).ToListAsync();
+    return await _context.Items.Select(x => ItemToDto(x)).ToListAsync();
   }
 
   // GET: /item/1
@@ -37,14 +37,14 @@ public class ItemController : BaseApiController
   ]
   public async Task<ActionResult<ItemDTO>> GetItem(int id)
   {
-    var Item = await _context.Items.FindAsync(id);
+    var item = await _context.Items.FindAsync(id);
 
-    if (Item == null)
+    if (item == null)
     {
       return NotFound();
     }
 
-    return ItemToDTO(Item);
+    return ItemToDto(item);
   }
 
   // PUT: /item/1
@@ -59,15 +59,15 @@ public class ItemController : BaseApiController
     {
       return BadRequest();
     }
-    var Item = await _context.Items.FindAsync(id);
-    if (Item == null)
+    var item = await _context.Items.FindAsync(id);
+    if (item == null)
     {
       return NotFound();
     }
-    Item.Name = ItemDTO.Name;
-    Item.Price = ItemDTO.Price;
-    Item.StockQuantity = ItemDTO.StockQuantity;
-    Item.StoreId = ItemDTO.StoreId;
+    item.Name = ItemDTO.Name;
+    item.Price = ItemDTO.Price;
+    item.StockQuantity = ItemDTO.StockQuantity;
+    item.StoreId = ItemDTO.StoreId;
     try
     {
       await _context.SaveChangesAsync();
@@ -87,7 +87,7 @@ public class ItemController : BaseApiController
   ]
   public async Task<ActionResult<ItemDTO>> PostItem(ItemDTO ItemDTO)
   {
-    var Item = new Item
+    var item = new Item
     {
       Name = ItemDTO.Name,
       Price = ItemDTO.Price,
@@ -100,14 +100,14 @@ public class ItemController : BaseApiController
     {
       return NotFound();
     }
-    Item.StoreId = store.Id;
+    item.StoreId = store.Id;
 
-    _context.Items.Add(Item);
+    _context.Items.Add(item);
     await _context.SaveChangesAsync();
     return CreatedAtAction(
            nameof(GetItem),
-                new { id = Item.Id },
-                     ItemToDTO(Item));
+                new { id = item.Id },
+                     ItemToDto(item));
   }
 
   // DELETE: /item/1
@@ -118,12 +118,12 @@ public class ItemController : BaseApiController
   ]
   public async Task<IActionResult> DeleteItem(int id)
   {
-    var Item = await _context.Items.FindAsync(id);
-    if (Item == null)
+    var item = await _context.Items.FindAsync(id);
+    if (item == null)
     {
       return NotFound();
     }
-    _context.Items.Remove(Item);
+    _context.Items.Remove(item);
     await _context.SaveChangesAsync();
     return NoContent();
   }
@@ -133,12 +133,13 @@ public class ItemController : BaseApiController
     return _context.Items.Any(e => e.Id == id);
   }
 
-  private static ItemDTO ItemToDTO(Item Item) =>
+  private static ItemDTO ItemToDto(Item item) =>
     new ItemDTO
     {
-      Id = Item.Id,
-      Name = Item.Name,
-      Price = Item.Price,
-      StoreId = Item.StoreId
+      Id = item.Id,
+      Name = item.Name,
+      Price = item.Price,
+      StockQuantity = item.StockQuantity,
+      StoreId = item.StoreId
     };
 }
