@@ -44,14 +44,14 @@ public class OrderItemController : BaseApiController
   }
 
   // PUT: /orderItem/1
-  [HttpPut]
+  [HttpPut("{id}")]
   [SwaggerOperation(
     Summary = "Update OrderItem",
     OperationId = "OrderItem.PutOrderItem")
   ]
-  public async Task<IActionResult> PutOrderItem(OrderItem orderItem)
+  public async Task<IActionResult> PutOrderItem(int id, OrderItem orderItem)
   {
-    var item = await _context.OrderItems.FindAsync(orderItem.OrderId, orderItem.ItemId);
+    var item = await _context.OrderItems.FindAsync(id, orderItem.ItemId);
     if (item == null)
     {
       return NotFound();
@@ -62,20 +62,19 @@ public class OrderItemController : BaseApiController
     return NoContent();
   }
 
-  // POST: /orderItem/1
-  [HttpPost("{id}")]
+  // POST: /orderItem
+  [HttpPost]
   [SwaggerOperation(
     Summary = "Add Item to specified Order",
     OperationId = "OrderItem.AddOrderItem")
   ]
-  public async Task<ActionResult<OrderItem>> AddOrderItem(int id, OrderItem orderItem)
+  public async Task<ActionResult<OrderItem>> AddOrderItem(OrderItem orderItem)
   {
-    var order = await _context.Orders.FindAsync(id);
+    var order = await _context.Orders.FindAsync(orderItem.OrderId);
     if (order == null)
     {
       return NotFound("Invalid OrderId!");
     }
-    orderItem.OrderId = order.Id;
 
     var item = await _context.Items.FindAsync(orderItem.ItemId);
     if (item == null)
@@ -91,20 +90,20 @@ public class OrderItemController : BaseApiController
                      orderItem);
   }
 
-  // DELETE: /order
-  [HttpDelete]
+  // DELETE: /orderItem/1
+  [HttpDelete("{id}")]
   [SwaggerOperation(
-    Summary = "Delete OrderItem",
-    OperationId = "OrderItem.DeleteOrderItem")
+    Summary = "Delete OrderItems",
+    OperationId = "OrderItem.DeleteOrderItems")
   ]
-  public async Task<IActionResult> DeleteOrder(OrderItem orderItem)
+  public async Task<IActionResult> DeleteOrderItems(int id)
   {
-    var item = await _context.OrderItems.FindAsync(orderItem.OrderId, orderItem.ItemId);
-    if (item == null)
+    var orderItems = await GetOrderItems(id);
+    if (orderItems.Value == null)
     {
-      return NotFound("Invalid OrderId and ItemId!");
+      return NotFound("Invalid OrderId!");
     }
-    _context.OrderItems.Remove(item);
+    _context.OrderItems.RemoveRange(orderItems.Value);
     await _context.SaveChangesAsync();
     return NoContent();
   }
