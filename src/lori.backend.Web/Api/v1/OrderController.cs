@@ -4,16 +4,20 @@ using lori.backend.Web.ApiModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
+using lori.backend.Core.Interfaces;
 
 namespace lori.backend.Web.Api.v1;
 
 public class OrderController : BaseApiController
 {
   private readonly LoriDbContext _context;
+  private readonly ILoginService _loginService;
 
-  public OrderController(LoriDbContext context)
+  public OrderController(LoriDbContext context, ILoginService loginService)
   {
     _context = context;
+    _loginService = loginService;
   }
 
   // GET: /order
@@ -156,6 +160,25 @@ public class OrderController : BaseApiController
     _context.Orders.Remove(Order);
     await _context.SaveChangesAsync();
     return NoContent();
+  }
+
+  // GET: /order/status
+  [HttpGet("status"), Authorize]
+  [SwaggerOperation(
+    Summary = "Gets status of all Orders",
+    OperationId = "Order.GetOrderStatus")
+  ] 
+  public async Task<ActionResult<IEnumerable<OrderDTO>>> GetOrderStatus()
+  {
+    var userName = _loginService.GetUser();
+    var customer = await _context.Customers.Where(c => string.Equals(c.Username, userName)).FirstAsync();
+    var orders = await _context.Orders.Where(order => order.CustomerId == customer.Id).ToListAsync();
+
+    if (orders.Count > 0)
+    {
+      return await _context.Orders.Select(x => OrderToDTO(x)).ToListAsync();
+    }
+    return NotFound();
   }
 
   private bool OrderExists(int id)
