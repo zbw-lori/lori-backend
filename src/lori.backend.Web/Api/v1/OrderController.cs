@@ -4,6 +4,7 @@ using lori.backend.Web.ApiModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
+using lori.backend.Infrastructure.Services;
 
 namespace lori.backend.Web.Api.v1;
 
@@ -138,6 +139,23 @@ public class OrderController : BaseApiController
            nameof(GetOrder),
                 new { id = Order.Id },
                      OrderToDTO(Order));
+  }
+
+  // POST: /order/prioritize
+  [HttpPost]
+  [SwaggerOperation(
+    Summary = "Send orders to prioritize",
+    OperationId = "Order.PostOrderToPrio")
+  ]
+  public ActionResult<OrderDTO> PostOrderToPrio(List<Order> OrderDTOList)
+  {
+    var orderService = new OrderService();
+
+    var prioretizedOrders =  orderService.CreateOrderPrio(OrderDTOList);
+
+    return CreatedAtAction(
+           nameof(PostOrderToPrio),
+                prioretizedOrders);
   }
 
   // DELETE: /order/1
