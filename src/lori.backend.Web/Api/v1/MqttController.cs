@@ -20,27 +20,80 @@ public class MqttController : BaseApiController
     _mqttService.Disconnect();  //todo: don't call async method?
   }
 
-  [HttpPost("order/{id}")]
+  [HttpPost("package/grab/{id}")]
   [SwaggerOperation(
-  Summary = "Sends an order to the specific robot",
-  OperationId = "Mqtt.PostOrder")]
-  public async Task<IActionResult> PostOrder(int id, MqttOrderDTO order)
+  Summary = "Sends command to grab package of specific robot",
+  OperationId = "Mqtt.GrabPackage")]
+  public async Task<IActionResult> GrabPackage(int id, int package)
   {
     await _mqttService.Connect();
-    var data = JsonSerializer.Serialize(order);
-    await _mqttService.Publish($"lori/{id}/order", data);
+    await _mqttService.Publish($"lori/{id}/grabPackage", package.ToString());
     return NoContent();
   }
 
-  [HttpPost("delivery/{id}")]
+  [HttpPost("package/store/{id}")]
   [SwaggerOperation(
-  Summary = "Sends delivery details to specific robot",
-  OperationId = "Mqtt.PostDelivery")]
-  public async Task<IActionResult> PostDelivery(int id, MqttDeliveryDTO delivery)
+  Summary = "Sends command to store package of specific robot",
+  OperationId = "Mqtt.StorePackage")]
+  public async Task<IActionResult> StorePackage(int id, int package)
   {
     await _mqttService.Connect();
-    var data = JsonSerializer.Serialize(delivery);
-    await _mqttService.Publish($"lori/{id}/delivery", data);
+    await _mqttService.Publish($"lori/{id}/storePackage", package.ToString());
+    return NoContent();
+  }
+
+  [HttpPost("package/deliver/{id}")]
+  [SwaggerOperation(
+  Summary = "Sends command to deliver package of specific robot",
+  OperationId = "Mqtt.DeliverPackage")]
+  public async Task<IActionResult> DeliverPackage(int id, int package)
+  {
+    await _mqttService.Connect();
+    await _mqttService.Publish($"lori/{id}/deliverPackage", package.ToString());
+    return NoContent();
+  }
+
+  [HttpPost("drive/store/{id}")]
+  [SwaggerOperation(
+  Summary = "Sends command to drive specific robot to store",
+  OperationId = "Mqtt.DriveToStore")]
+  public async Task<IActionResult> DriveToStore(int id)
+  {
+    await _mqttService.Connect();
+    await _mqttService.Publish($"lori/{id}/driveToStore", "");
+    return NoContent();
+  }
+
+  [HttpPost("drive/package/{id}")]
+  [SwaggerOperation(
+  Summary = "Sends command to drive specific robot to package",
+  OperationId = "Mqtt.DriveToPackage")]
+  public async Task<IActionResult> DriveToPackage(int id, int package)
+  {
+    await _mqttService.Connect();
+    await _mqttService.Publish($"lori/{id}/driveToPackage", package.ToString());
+    return NoContent();
+  }
+
+  [HttpPost("drive/customer/{id}")]
+  [SwaggerOperation(
+  Summary = "Sends command to drive specific robot to customer",
+  OperationId = "Mqtt.DriveToCustomer")]
+  public async Task<IActionResult> DriveToCustomer(int id, int customer)
+  {
+    await _mqttService.Connect();
+    await _mqttService.Publish($"lori/{id}/driveToCustomer", customer.ToString());
+    return NoContent();
+  }
+
+  [HttpPost("drive/start/{id}")]
+  [SwaggerOperation(
+  Summary = "Sends command to drive specific robot to start",
+  OperationId = "Mqtt.DriveToStart")]
+  public async Task<IActionResult> DriveToStart(int id)
+  {
+    await _mqttService.Connect();
+    await _mqttService.Publish($"lori/{id}/driveToStart", "");
     return NoContent();
   }
 
